@@ -1,7 +1,7 @@
-
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
-print(os.environ.get('DATABASE_PASSWORD'))
+database_password = os.environ.get('DATABASE_PASSWORD')
+suszi_login = "stoszek"
+server = "morfeusz.wszib.edu.pl"
