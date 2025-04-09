@@ -19,5 +19,20 @@ connection_string = (
 
 connection = pyodbc.connect(connection_string)
 
+#connection.execute("CREATE TABLE users(id int identity, name varchar(255), age int)")
+#Start tranzakcji 1
+# connection.execute("INSERT INTO users(name, age) VALUES ('Arek', 31), ('Jozef', 25)")
+# #commit tranzakcji 1
+# connection.commit()
+# #Start trazakcji 2(nie utrwalono bo nie ma commita)
+# connection.execute("INSERT INTO users(name, age) VALUES ('Artur', 15)")
 
+cursor = connection.cursor()
+cursor.execute("UPDATE users SET NAME='Nowe' WHERE name = 'Arek'")
+cursor.commit()
+print(f'{cursor.rowcount} wierszy zmienionych')
+cursor.execute("SELECT NAME FROM users")
+#print(cursor.fetchall())
 
+cursor.close()
+connection.close()
