@@ -28,6 +28,8 @@ class Account:
             print(f"Na konto {self.name} zostało dodane {amount} PLN")
         return round(self.balance, 2)
 
+
+
     def withdraw(self, amount: float) -> float:
         if 0 < amount <= self.balance:
             self.balance -= amount
@@ -37,6 +39,10 @@ class Account:
             connection.commit()
             print(f"Z konta {self.name} zostało wypłacone {amount} PLN.")
         return round(self.balance, 2)
+
+    def send_founds(self, amount:float, account):
+        self.withdraw(amount)
+        account.deposit(amount)
 
 
 if __name__ == '__main__':
