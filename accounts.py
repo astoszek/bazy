@@ -1,5 +1,5 @@
 from database1 import connection
-
+import datetime
 
 class Account:
 
@@ -21,19 +21,27 @@ class Account:
     def deposit(self, amount: float) -> float:
         if amount > 0:
             self.balance += amount
+            connection.execute("UPDATE accounts SET balance = ? WHERE account_id = ?", (self.balance, self.id))
+            connection.execute("INSERT INTO transactions(account_id, transaction_time, amount) VALUES (?,?,?)",
+                            (self.id, datetime.datetime.now(), amount))
+            connection.commit()
             print(f"Na konto {self.name} zostało dodane {amount} PLN")
         return round(self.balance, 2)
 
     def withdraw(self, amount: float) -> float:
         if 0 < amount <= self.balance:
             self.balance -= amount
-            print("Z konta {self.name} zostało wypłacone {amouunt} PLN.")
+            connection.execute("UPDATE accounts SET balance = ? WHERE account_id = ?", (self.balance, self.id))
+            connection.execute("INSERT INTO transactions(account_id, transaction_time, amount) VALUES (?,?,?)",
+                            (self.id, datetime.datetime.now(), -amount))
+            connection.commit()
+            print(f"Z konta {self.name} zostało wypłacone {amount} PLN.")
         return round(self.balance, 2)
 
 
 if __name__ == '__main__':
     account = Account('Arek')
-    account.deposit(10)
-    account.deposit(0.1)
-    balance = account.withdraw(5)
+    account.deposit(100)
+    account.deposit(0.2)
+    balance = account.withdraw(6)
     print(balance)
