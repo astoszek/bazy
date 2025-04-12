@@ -1,3 +1,4 @@
+
 import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
@@ -12,7 +13,7 @@ suszi_login = 'stoszek'
 server = 'morfeusz.wszib.edu.pl'
 driver = 'ODBC+Driver+17+for+SQL+Server'
 
-# dialect+driver://username:password@host:port/database?dodatkowe_opcje_klucz_wartość
+# dialect+driver://username:password@host:port/database?dodtkowe_opcje_klucz_wartość
 engine = create_engine(
     f'mssql+pyodbc://{suszi_login}:{database_password}@{server}/{suszi_login}?driver={driver}&Encrypt=no',
     echo=False
@@ -21,8 +22,9 @@ engine = create_engine(
 Session = sessionmaker(engine)
 
 if __name__ == '__main__':
-    session = Session()
-    session.execute(CreateSchema('library_orm'))
-    session.commit()
+    # session = Session()
+    # session.execute(CreateSchema('library_orm'))
+    # session.commit()
 
     Base.metadata.create_all(engine)
+
