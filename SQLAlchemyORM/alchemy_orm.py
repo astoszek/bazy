@@ -30,8 +30,15 @@ class Author(Base):
     login: Mapped[str] = mapped_column(String(100), default='No Login')
     middle_name: Mapped[Optional[str]]
 
-    books: Mapped[List['Book']] = relationship(back_populates='author', cascade='delete, delete-orphan')
-    address: Mapped['Address'] = relationship(back_populates='author', cascade='delete, delete-orphan')
+    books: Mapped[List['Book']] = relationship(back_populates='author', cascade='all, delete, delete-orphan', lazy='joined')
+    address: Mapped['Address'] = relationship(back_populates='author', cascade='all, delete, delete-orphan', lazy='joined')
+
+    def __str__(self):
+        return f'{self.name} {self.middle_name}'
+
+    def __repr__(self):
+        return f'{self.name} {self.middle_name}'
+
 
 
 class Event(Base):

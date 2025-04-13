@@ -1,4 +1,3 @@
-
 import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
@@ -27,4 +26,3 @@ if __name__ == '__main__':
     # session.commit()
 
     Base.metadata.create_all(engine)
-
